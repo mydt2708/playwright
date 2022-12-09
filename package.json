@@ -1,0 +1,12 @@
+{
+  "name": "playwright",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:mydt2708/playwright.git",
+  "author": "klaus <32713077+hirosumee@users.noreply.github.com>>",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.28.1"
+  },
+  "scripts": {}
+}
