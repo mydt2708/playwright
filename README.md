@@ -1,1 +1,1 @@
-# playwring
+# playwright
