@@ -14,6 +14,5 @@ test.describe('Test tool QA', () => {
         await page.locator('#permanentAddress').click();
         await page.locator('#permanentAddress').fill('Ha Noi');
         await page.getByRole('button', {name: 'Submit'}).click();
-        await page.close();
     });
 });
