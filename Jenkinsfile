@@ -32,6 +32,7 @@ pipeline {
             dir("${workspace}@script") {
                 deleteDir()
             }
+            sh "ls ${workspace}"
         }
     }
 }
