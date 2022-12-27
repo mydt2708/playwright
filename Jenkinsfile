@@ -21,6 +21,15 @@ pipeline {
 
     post {
         cleanup {
+             dir('${workspace}') {
+               def files = findFiles()
+
+               files.each{ f ->
+                  if(f.directory) {
+                    echo "This is directory: ${f.name} "
+                  }
+               }
+             }
             /* clean up our workspace */
             deleteDir()
             /* clean up tmp directory */
@@ -30,6 +39,15 @@ pipeline {
             /* clean up script directory */
             dir("${workspace}@script") {
                 deleteDir()
+            }
+            dir('${workspace}') {
+                def files = findFiles()
+
+                files.each{ f ->
+                     if(f.directory) {
+                        echo "This is directory: ${f.name} "
+                      }
+                    }
             }
         }
     }
