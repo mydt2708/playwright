@@ -19,19 +19,6 @@ pipeline {
         }
     }
 
-    steps {
-        script {
-                     dir('${workspace}') {
-                       def files = findFiles()
-
-                       files.each{ f ->
-                          if(f.directory) {
-                            echo "This is directory: ${f.name} "
-                          }
-                       }
-                     }
-        }
-        }
     post {
         cleanup {
             /* clean up our workspace */
@@ -46,18 +33,4 @@ pipeline {
             }
         }
     }
-
-        steps {
-            script {
-                         dir('${workspace}') {
-                           def files = findFiles()
-
-                           files.each{ f ->
-                              if(f.directory) {
-                                echo "This is directory: ${f.name} "
-                              }
-                           }
-                         }
-            }
-            }
 }
