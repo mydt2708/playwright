@@ -21,6 +21,7 @@ pipeline {
 
     post {
         cleanup {
+            ls ${workspace}
             /* clean up our workspace */
             deleteDir()
             /* clean up tmp directory */
