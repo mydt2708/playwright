@@ -5,9 +5,10 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building application..."
-                bat "%ANT_HOME%/bin/ant.bat clean compile"
-                currentBuild.name = "MY_VERSION_NUMBER"
-                currentBuild.description = "MY_PROJECT MY_VERSION_NUMBER"
+                script {
+                    currentBuild.displayName = "The name."
+                    currentBuild.description = "The best description."
+                }
             }
         }
         stage('Test') {
