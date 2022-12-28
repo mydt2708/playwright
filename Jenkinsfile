@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    options {
+        skipDefaultCheckout true
+    }
 
     parameters {
         string(name: 'TEST_FILE_OR_FOLDER', defaultValue: './examples/basic/login_and_verify.spec.ts', description: 'Testing directory')
@@ -24,6 +27,14 @@ pipeline {
                 }
             }
         }
+
+        stage('clean_workspace_and_checkout_source') {
+            steps {
+              deleteDir()
+              checkout scm
+            }
+        }
+
         stage('Build') {
             steps {
                 echo "Building application..."
