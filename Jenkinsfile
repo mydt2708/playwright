@@ -14,15 +14,16 @@ pipeline {
         string(name: 'TH_JOB_RUN_MODE', defaultValue: '', description: 'Testhub Run mode (one-time|multiple-time)')
     }
 
-
+    node {
+        script {
+            currentBuild.displayName = "${CI_ENV}_${BRANCH}_${SUITE_ID_OR_CASE_ID}"
+            currentBuild.description = "${TH_JOB_NAME}"
+        }
+    }
     stages {
         stage('Build') {
             steps {
                 echo "Building application..."
-                script {
-                    currentBuild.displayName = "${CI_ENV}_${BRANCH}_${SUITE_ID_OR_CASE_ID}"
-                    currentBuild.description = "${TH_JOB_NAME}"
-                }
             }
         }
         stage('Test') {
