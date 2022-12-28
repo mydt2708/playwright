@@ -1,15 +1,6 @@
 pipeline {
     agent any
-    stages {
-        stage('Set description') {
-            steps {
-                script {
-                currentBuild.displayName = "${CI_ENV}_${BRANCH}_${SUITE_ID_OR_CASE_ID}"
-                currentBuild.description = "${TH_JOB_NAME}"
-                }
-            }
-        }
-    }
+
 
     parameters {
         string(name: 'TEST_FILE_OR_FOLDER', defaultValue: './examples/basic/login_and_verify.spec.ts', description: 'Testing directory')
@@ -25,6 +16,14 @@ pipeline {
 
 
     stages {
+        stage('Set description') {
+            steps {
+                script {
+                currentBuild.displayName = "[${CI_ENV}_${BRANCH}_${SUITE_ID_OR_CASE_ID}]"
+                currentBuild.description = "${TH_JOB_NAME}"
+                }
+            }
+        }
         stage('Build') {
             steps {
                 echo "Building application..."
