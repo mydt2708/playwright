@@ -5,6 +5,10 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+                script {
+                   def props = readProperties  file: 'build.properties'
+                       currentBuild.displayName = "v" + props['application.version']
+                }
             }
         }
         stage('Test') {
