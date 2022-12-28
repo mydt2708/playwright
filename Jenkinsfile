@@ -4,11 +4,10 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
-                script {
-                   def props = readProperties  file: 'build.properties'
-                       currentBuild.displayName = "v" + props['application.version']
-                }
+                echo "Building application..."
+                bat "%ANT_HOME%/bin/ant.bat clean compile"
+                currentBuild.name = "MY_VERSION_NUMBER"
+                currentBuild.description = "MY_PROJECT MY_VERSION_NUMBER"
             }
         }
         stage('Test') {
