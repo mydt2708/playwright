@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    stages {
         stage('Set description') {
             steps {
                 script {
@@ -8,6 +9,7 @@ pipeline {
                 }
             }
         }
+    }
 
     parameters {
         string(name: 'TEST_FILE_OR_FOLDER', defaultValue: './examples/basic/login_and_verify.spec.ts', description: 'Testing directory')
