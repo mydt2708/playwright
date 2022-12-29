@@ -22,6 +22,7 @@ pipeline {
         stage('Set description') {
             steps {
                 script {
+                    sh "ls .env"
                     currentBuild.displayName = "${env.GIT_COMMITTER_NAME}"
                     currentBuild.description = "${TH_JOB_NAME}"
                 }
