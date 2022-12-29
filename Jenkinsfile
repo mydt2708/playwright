@@ -21,11 +21,10 @@ pipeline {
     stages {
         stage('Set description') {
             steps {
-                wrap([$class: 'BuildUser']) {
                 script {
-                    currentBuild.displayName = "[${CI_ENV}]-[${BRANCH}]-[${BUILD_USER}]"
+                    currentBuild.displayName = "${BUILD_USER}"
                     currentBuild.description = "${TH_JOB_NAME}"
-                }                }
+                }
             }
         }
 
