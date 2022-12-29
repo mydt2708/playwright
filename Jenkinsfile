@@ -22,7 +22,7 @@ pipeline {
         stage('Set description') {
             steps {
                 script {
-                    currentBuild.displayName = "${BUILD_USER}"
+                    currentBuild.displayName = "${env.BUILD_USER}"
                     currentBuild.description = "${TH_JOB_NAME}"
                 }
             }
