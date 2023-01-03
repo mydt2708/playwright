@@ -19,7 +19,7 @@ pipeline {
 
 
     stages {
-        stage('Set description') {
+        stage('Update job desc') {
             steps {
                 script {
                 currentBuild.displayName = "${ID()} - ${USER()}"
@@ -30,26 +30,11 @@ pipeline {
             }
         }
 
-        stage('clean_workspace_and_checkout_source') {
+        stage('Running tests') {
             steps {
-              deleteDir()
-              checkout scm
-            }
-        }
-
-        stage('Build') {
-            steps {
-                echo "Building application..."
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
+                script {
+                    genSubJobs()
+                }
             }
         }
     }
@@ -82,4 +67,38 @@ def ID() {
  wrap([$class: 'BuildUser']) {
       return env.BUILD_DISPLAY_NAME
     }
+}
+
+def genSubJobs() {
+    tests = [:]
+    int totalShards = Integer.parseInt(SHARDS);
+    for (i = 0; i < totalShards; i++) {
+        def shardNum = "${i+1}"
+        tests["${shardNum}"] = {
+            node() {
+                stage("Shard #${shardNum}") {
+                    docker.image('mcr.microsoft.com/playwright:v1.21.1').inside {
+                        git branch: "${BRANCH}",
+                            url: "git@gitlab.shopbase.dev:brodev/qa/ocg-autopilot-2.git"
+                        if (SUITE_ID_OR_CASE_ID != null && SUITE_ID_OR_CASE_ID != "") {
+                            sh """
+                                yarn install
+                                set +e
+                                CI_ENV=${CI_ENV} yarn test ${TEST_FILE_OR_FOLDER} -g "${SUITE_ID_OR_CASE_ID}" --shard=${shardNum}/${SHARDS}
+                                set -e
+                            """
+                        } else {
+                            sh """
+                                yarn install
+                                set +e
+                                CI_ENV=${CI_ENV} yarn test ${TEST_FILE_OR_FOLDER} --shard=${shardNum}/${SHARDS}
+                                set -e
+                            """
+                        }
+                    }
+                }
+            }
+        }
+    }
+    parallel tests
 }
