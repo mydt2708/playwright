@@ -79,7 +79,7 @@ def genSubJobs() {
                 stage("Shard #${shardNum}") {
                     docker.image('mcr.microsoft.com/playwright:v1.21.1').inside {
                         git branch: "${BRANCH}",
-                            url: "git@gitlab.shopbase.dev:brodev/qa/ocg-autopilot-2.git"
+                            url: "git@github.com:mydt2708/playwright.git"
                         if (SUITE_ID_OR_CASE_ID != null && SUITE_ID_OR_CASE_ID != "") {
                             sh """
                                 yarn install
