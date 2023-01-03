@@ -22,8 +22,10 @@ pipeline {
         stage('Set description') {
             steps {
                 script {
-                    currentBuild.displayName = USER()
-                    currentBuild.description = "${TH_JOB_NAME}"
+                currentBuild.displayName = "${ID()} - ${USER()}"
+                if (env.TH_JOB_NAME != null && env.TH_JOB_NAME != "") {
+                  currentBuild.description = "${TH_JOB_NAME}"
+                  }
                 }
             }
         }
@@ -73,5 +75,11 @@ pipeline {
 def USER() {
  wrap([$class: 'BuildUser']) {
       return env.BUILD_USER
+    }
+}
+
+def ID() {
+ wrap([$class: 'BuildUser']) {
+      return env.BUILD_DISPLAY_NAME
     }
 }
