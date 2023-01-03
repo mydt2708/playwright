@@ -22,7 +22,6 @@ pipeline {
         stage('Set description') {
             steps {
                 script {
-                    sh "printenv"
                     currentBuild.displayName = USER()
                     currentBuild.description = "${TH_JOB_NAME}"
                 }
