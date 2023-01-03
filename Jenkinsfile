@@ -30,7 +30,7 @@ pipeline {
             }
         }
 
-        stage('buil docker image') {
+        stage('build docker image') {
             steps {
                withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
                     sh "docker build -t myduong/playwright:v1.21.1 ."
@@ -43,7 +43,6 @@ pipeline {
 
     post {
         cleanup {
-            sh "ls ${workspace}"
             /* clean up our workspace */
             deleteDir()
             /* clean up tmp directory */
@@ -54,7 +53,6 @@ pipeline {
             dir("${workspace}@script") {
                 deleteDir()
             }
-            sh "ls ${workspace}"
         }
     }
 }
