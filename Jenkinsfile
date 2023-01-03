@@ -91,7 +91,7 @@ def genSubJobs() {
                             sh """
                                 yarn install
                                 set +e
-                                CI_ENV=${CI_ENV} yarn test ${TEST_FILE_OR_FOLDER} --shard=${shardNum}/${SHARDS}
+                                yarn test ${TEST_FILE_OR_FOLDER}
                                 set -e
                             """
                         }
