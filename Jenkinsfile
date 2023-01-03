@@ -30,13 +30,15 @@ pipeline {
             }
         }
 
-        stage('Running tests') {
+        stage('buil docker image') {
             steps {
-                script {
-                    genSubJobs()
+               withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
+                    sh "docker build -t myduong/playwright:v1.21.1 ."
+                    sh "docker push myduong/playwright:v1.21.1 ."
                 }
             }
         }
+
     }
 
     post {
@@ -67,38 +69,4 @@ def ID() {
  wrap([$class: 'BuildUser']) {
       return env.BUILD_DISPLAY_NAME
     }
-}
-
-def genSubJobs() {
-    tests = [:]
-    int totalShards = Integer.parseInt(SHARDS);
-    for (i = 0; i < totalShards; i++) {
-        def shardNum = "${i+1}"
-        tests["${shardNum}"] = {
-            node() {
-                stage("Shard #${shardNum}") {
-                    docker.image('mcr.microsoft.com/playwright:v1.21.1').inside {
-                        git branch: "${BRANCH}",
-                            url: "git@github.com:mydt2708/playwright.git"
-                        if (SUITE_ID_OR_CASE_ID != null && SUITE_ID_OR_CASE_ID != "") {
-                            sh """
-                                yarn install
-                                set +e
-                                CI_ENV=${CI_ENV} yarn test ${TEST_FILE_OR_FOLDER} -g "${SUITE_ID_OR_CASE_ID}" --shard=${shardNum}/${SHARDS}
-                                set -e
-                            """
-                        } else {
-                            sh """
-                                yarn install
-                                set +e
-                                yarn test ${TEST_FILE_OR_FOLDER}
-                                set -e
-                            """
-                        }
-                    }
-                }
-            }
-        }
-    }
-    parallel tests
 }
