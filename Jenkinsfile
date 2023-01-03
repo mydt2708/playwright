@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     sh "printenv"
-                    currentBuild.displayName = "${env.GIT_COMMITTER_NAME}"
+                    currentBuild.displayName = USER()
                     currentBuild.description = "${TH_JOB_NAME}"
                 }
             }
@@ -68,5 +68,11 @@ pipeline {
             }
             sh "ls ${workspace}"
         }
+    }
+}
+
+def USER() {
+ wrap([$class: 'BuildUser']) {
+      return env.BUILD_USER
     }
 }
