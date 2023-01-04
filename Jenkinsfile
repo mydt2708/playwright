@@ -36,6 +36,7 @@ pipeline {
                 script {
                         if (SUITE_ID_OR_CASE_ID != null && SUITE_ID_OR_CASE_ID != "") {
                             sh """
+                                npm install -g yarn
                                 yarn install
                                 set +e
                                 CI_ENV=${CI_ENV} yarn test ${TEST_FILE_OR_FOLDER} -g "${SUITE_ID_OR_CASE_ID}" --shard=${shardNum}/${SHARDS}
@@ -43,6 +44,7 @@ pipeline {
                             """
                         } else {
                             sh """
+                                npm install -g yarn
                                 yarn install
                                 set +e
                                 yarn test ${TEST_FILE_OR_FOLDER}
