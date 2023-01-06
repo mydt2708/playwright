@@ -45,6 +45,7 @@ pipeline {
                             """
                         } else {
                             sh """
+                                whoami
                                 node -v
                                 npm install -g yarn
                                 yarn install
