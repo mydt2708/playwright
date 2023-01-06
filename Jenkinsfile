@@ -36,6 +36,7 @@ pipeline {
                 script {
                         if (SUITE_ID_OR_CASE_ID != null && SUITE_ID_OR_CASE_ID != "") {
                             sh """
+                                node -v
                                 npm install -g yarn
                                 yarn install
                                 set +e
@@ -44,6 +45,7 @@ pipeline {
                             """
                         } else {
                             sh """
+                                node -v
                                 npm install -g yarn
                                 yarn install
                                 set +e
