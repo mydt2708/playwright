@@ -45,8 +45,6 @@ pipeline {
                             """
                         } else {
                             sh """
-                                source ~/.bashrc
-                                cat ~/.bashrc
                                 whoami
                                 node -v
                                 npm install -g yarn
