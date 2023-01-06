@@ -45,9 +45,6 @@ pipeline {
                             """
                         } else {
                             sh """
-                                whoami
-                                node -v
-                                npm install -g yarn
                                 yarn install
                                 set +e
                                 yarn test ${TEST_FILE_OR_FOLDER}
