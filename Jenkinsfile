@@ -44,6 +44,7 @@ pipeline {
                                 set -e
                             """
                         } else {
+                            sh "npm install -g yarn"
                             sh """
                                 #!/bin/bash
                                 echo "hello world"
