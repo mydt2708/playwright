@@ -44,12 +44,7 @@ pipeline {
                                 set -e
                             """
                         } else {
-                            sh "whoami && node -v && npm install -g yarn"
                             sh """
-                                #!/bin/bash
-                                echo "hello world"
-                                source $HOME/.bashrc
-                                ls
                                 yarn install
                                 set +e
                                 yarn test ${TEST_FILE_OR_FOLDER}
