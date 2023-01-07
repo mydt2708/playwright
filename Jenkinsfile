@@ -45,6 +45,7 @@ pipeline {
                             """
                         } else {
                             sh """
+                                source $HOME/.bashrc
                                 ls
                                 yarn install
                                 set +e
