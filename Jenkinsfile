@@ -27,10 +27,8 @@ pipeline {
                   currentBuild.description = "${TH_JOB_NAME}"
                   }
                 }
-            }
-             steps {
                 checkout scm
-             }
+            }
         }
 
 
