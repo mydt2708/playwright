@@ -28,6 +28,9 @@ pipeline {
                   }
                 }
             }
+             steps {
+                checkout scm
+             }
         }
 
 
@@ -45,7 +48,6 @@ pipeline {
                             """
                         } else {
                             sh """
-                                git clone git@github.com:mydt2708/playwright.git
                                 yarn install
                                 set +e
                                 yarn test ${TEST_FILE_OR_FOLDER}
