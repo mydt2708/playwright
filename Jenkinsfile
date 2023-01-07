@@ -45,6 +45,7 @@ pipeline {
                             """
                         } else {
                             sh """
+                                ls
                                 yarn install
                                 set +e
                                 yarn test ${TEST_FILE_OR_FOLDER}
